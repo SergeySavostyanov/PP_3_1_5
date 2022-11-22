@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>List of users</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>Список пользователей</h1>
+<div>
+    <nobr>
+        <a th:href="@{/admin/add}">Добавить пользователя</a>
+    </nobr>
+</div>
+<br/>
+<div>
+    <table border="1">
+        <tr>
+            <th>Id</th>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Возраст</th>
+            <th>Email</th>
+            <th>Роль</th>
+            <th>Изменить</th>
+            <th>Удалить</th>
+        </tr>
+        <tr th:each ="person : ${listUsers}">
+            <td th:utext="${person.getId()}">...</td>
+            <td th:utext="${person.getFirstName()}">...</td>
+            <td th:utext="${person.getLastName()}">...</td>
+            <td th:utext="${person.getAge()}">...</td>
+            <td th:utext="${person.getEmail()}">...</td>
+            <td th:utext="${person.getRole()}">...</td>
+            <td><a th:href="@{/user-update/{id}(id=${person.getId})}">Изменить</a></td>
+            <td><a th:href="@{/delete(id=${person.getId()})}">Удалить</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

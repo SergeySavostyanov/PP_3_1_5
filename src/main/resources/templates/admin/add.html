@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>User Addition Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Введите данные пользователя</h1>
+<form action="#" th:action="@{/admin/add}" th:object="${person}" method="post">
+
+    <p>Имя: <input type="text" th:field="*{firstName}" /></p>
+    <p>Фамилия: <input type="text" th:field="*{lastName}" /></p>
+    <p>Возраст: <input type="text" th:field="*{age}" /></p>
+    <p>Email: <input type="text" th:field="*{email}" /></p>
+    <p>Пароль: <input type="text" th:field="*{password}" /></p>
+
+    <p><input type="submit" value="Записать" /> <input type="reset" value="Очистить" /></p>
+</form>
+<form th:action="@{/logout}" th:method="POST">
+    <input type="submit" value="Выход">
+</form>
+<br/>
+<form th:action="@{/admin}" th:method="POST">
+    <input type="submit" value="Назад">
+</form>
+</body>
+</html>

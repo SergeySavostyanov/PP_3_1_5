@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Getting Started: Handing Form Submission</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Добавлен пользователь со следующими данными:</h1>
+<p th:text="'Имя: ' + ${person.firstName}" />
+<p th:text="'Фамилиия: ' + ${person.lastName}" />
+<p th:text="'Возраст: ' + ${person.age}" />
+<p th:text="'Email: ' + ${person.email}" />
+
+
+
+
+<a href="/admin/add">Добавить еще одного пользователя </a>
+<br/><br/>
+<a href="/admin">Перейти к списку пользователей </a>
+<br/><br/>
+<form th:action="@{/logout}" th:method="POST">
+  <input type="submit" value="Выход">
+</form>
+
+</body>
+</html>

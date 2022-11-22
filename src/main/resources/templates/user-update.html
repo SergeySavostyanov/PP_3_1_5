@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>User Edition Form</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Введите новые данные пользователя</h1>
+<form action="#" th:action="@{/user-update}" th:object="${person}" method="post">
+    <label for="id">ID</label>
+    <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">
+    <br/>
+    <br/>
+    <label for="name">First Name</label>
+    <input type="text" th:field="*{firstName}" id="name" placeholder="First Name">
+    <br/>
+    <br/>
+    <label for="lastName">Second Name</label>
+    <input type="text" th:field="*{lastName}" id="lastName" placeholder="Second Name">
+    <br/>
+    <br/>
+    <label for="age">Age</label>
+    <input type="text" th:field="*{age}" id="age" placeholder="Age">
+    <br/>
+    <br/>
+    <label for="email">Email</label>
+    <input type="text" th:field="*{email}" id="email" placeholder="Email">
+    <br/>
+    <br/>
+    <label for="password">Password</label>
+    <input readonly type="text" th:field="*{password}" id="password" placeholder="Password">
+    <br/>
+    <br/>
+    <label for="role">role</label>
+    <input type="text" th:field="*{role}" id="role" placeholder="Role">
+    <br/>
+    <br/>
+    <input type="submit" value="Изменить" />
+</form>
+<form th:action="@{/logout}" th:method="POST">
+    <input type="submit" value="Выход">
+</form>
+</body>
+</html>
