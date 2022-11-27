@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,36 +28,39 @@ public class AdminController {
     }
 
     @GetMapping
-    public String adminPage(Model model) {
+    public String adminPage(Model model, @AuthenticationPrincipal User user, @ModelAttribute("new_user") User new_user) {
         List<User> allUsers = userService.listUsers();
         List<Role> allRoles = roleService.listRoles();
         model.addAttribute("allUsers", allUsers);
         model.addAttribute("allRole", allRoles);
+        model.addAttribute("user", user);
+        model.addAttribute("new_user", new_user);
         return "admin/index";
     }
 
-    @GetMapping(value = "/addNewUser")
-    public String addNewUser(@ModelAttribute("user") User user, Model model) {
-        model.addAttribute("listRoles", roleService.listRoles());
-        return "admin/user-info";
-    }
-
     @PostMapping(value = "/saveUser")
-    public String saveUser(@ModelAttribute("user") User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.update(user);
+    public String saveUser(@ModelAttribute("new_user") User new_user) {
+        List<User> allUsers = userService.listUsers();
+        new_user.setPassword(passwordEncoder.encode(new_user.getPassword()));
+        if (!allUsers.contains(new_user)) {
+            userService.add(new_user);
+        }
         return "redirect:/admin";
     }
 
-    @GetMapping(value = "/updateInfo/{id}")
+    @PostMapping(value = "/edit/{id}")
     public String updateUser(ModelMap model, @PathVariable int id, @ModelAttribute("user") User user) {
-        model.addAttribute("user", userService.getUserByID(id));
-        model.addAttribute("listRoles", roleService.listRoles());
-        return "admin/user-info";
+        if (user.getPassword() == null) {
+            userService.update(user);
+        } else {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            userService.update(user);
+        }
+        return "redirect:/admin";
     }
 
     @PostMapping(value = "deleteUser/{id}")
-    public String deleteUser(@PathVariable int id, ModelMap model) {
+    public String deleteUser(@PathVariable int id) {
         userService.delete(id);
         return "redirect:/admin";
     }

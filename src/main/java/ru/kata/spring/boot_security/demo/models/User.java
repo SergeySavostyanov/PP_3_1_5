@@ -95,6 +95,13 @@ public class User implements UserDetails {
                 ", roles=" + roles +
                 '}';
     }
+    public String getRolesString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Role role : roles) {
+            stringBuilder.append(role).append(" ");
+        }
+        return stringBuilder.toString();
+    }
 
     @Override
     public boolean equals(Object o) {
