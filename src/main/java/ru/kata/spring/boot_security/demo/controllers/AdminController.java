@@ -1,55 +1,66 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import ru.kata.spring.boot_security.demo.model.Person;
-import ru.kata.spring.boot_security.demo.services.AdminService;
-import ru.kata.spring.boot_security.demo.services.PersonServiceImpl;
-import ru.kata.spring.boot_security.demo.services.RegistrationService;
-import ru.kata.spring.boot_security.demo.util.PersonValidator;
+import ru.kata.spring.boot_security.demo.models.Role;
+import ru.kata.spring.boot_security.demo.models.User;
+import ru.kata.spring.boot_security.demo.services.RoleService;
+import ru.kata.spring.boot_security.demo.services.UserService;
 
-import javax.validation.Valid;
+import java.util.List;
 
-@RequestMapping("/admin")
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
-    private final PersonServiceImpl personService;
-    private final PersonValidator personValidator;
-    private final RegistrationService registrationService;
-    private final AdminService adminService;
 
-    public AdminController(PersonServiceImpl personService, PersonValidator personValidator, RegistrationService registrationService, AdminService adminService) {
-        this.personService = personService;
-        this.personValidator = personValidator;
-        this.registrationService = registrationService;
-        this.adminService = adminService;
+    UserService userService;
+    RoleService roleService;
+    PasswordEncoder passwordEncoder;
+
+
+    @Autowired
+    public AdminController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
-
-
-    @GetMapping(value = "/add")
-    public String greetingForm(Model model) {
-        model.addAttribute("person", new Person());
-        return "/admin/add";
+    @GetMapping
+    public String adminPage(Model model) {
+        List<User> allUsers = userService.listUsers();
+        List<Role> allRoles = roleService.listRoles();
+        model.addAttribute("allUsers", allUsers);
+        model.addAttribute("allRole", allRoles);
+        return "admin/index";
     }
 
-    @PostMapping(value = "/add")
-    public String greetingSubmit(@ModelAttribute Person person, Model model) {
-        model.addAttribute("person", person);
-        registrationService.register(person);
-        return "/admin/result";
+    @GetMapping(value = "/addNewUser")
+    public String addNewUser(@ModelAttribute("user") User user, Model model) {
+        model.addAttribute("listRoles", roleService.listRoles());
+        return "admin/user-info";
     }
 
-
-    @GetMapping(value = "/delete")
-    public String deleteUser(@RequestParam(value = "id") Long id, Person person, Model model) {
-
-        adminService.doAdminStuff();
-        model.addAttribute("person", person);
-        personService.removeUser(id);
+    @PostMapping(value = "/saveUser")
+    public String saveUser(@ModelAttribute("user") User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userService.update(user);
         return "redirect:/admin";
     }
 
+    @GetMapping(value = "/updateInfo/{id}")
+    public String updateUser(ModelMap model, @PathVariable int id, @ModelAttribute("user") User user) {
+        model.addAttribute("user", userService.getUserByID(id));
+        model.addAttribute("listRoles", roleService.listRoles());
+        return "admin/user-info";
+    }
+
+    @PostMapping(value = "deleteUser/{id}")
+    public String deleteUser(@PathVariable int id, ModelMap model) {
+        userService.delete(id);
+        return "redirect:/admin";
+    }
 }

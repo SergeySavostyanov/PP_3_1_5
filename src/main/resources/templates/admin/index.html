@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Spring Security Example</title>
+</head>
+<body>
+<h2>Список пользователей</h2>
+<br>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Логин</th>
+        <th>Имя</th>
+        <th>Фамилия</th>
+        <th>Почта</th>
+        <th>Изменить</th>
+        <th>Удалить</th>
+    </tr>
+    <tbody>
+    <tr th:each="usr : ${allUsers}">
+        <td th:text="${usr.id}"></td>
+        <td th:text="${usr.username}"></td>
+        <td th:text="${usr.name}"></td>
+        <td th:text="${usr.surname}"></td>
+        <td th:text="${usr.email}"></td>
+        <td style="display:flow">
+            <form th:method="GET" th:action="@{/admin/updateInfo/{id}(id=${usr.getId()})}">
+                <input type="submit" value="Update"/>
+            </form>
+        </td>
+        <td style="display: flow">
+            <form th:method="POST" th:action="@{/admin/deleteUser/{id}(id=${usr.getId()})}">
+                <input type="submit" value="Delete"/>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<br>
+<input type="button" value="Добавить" onclick="window.location.href = 'admin/addNewUser' "/>
+<br>
+<br>
+<form th:action="@{/logout}" th:method="POST">
+    <input type="submit" value="Выход">
+</form>
+
+</body>
+</html>

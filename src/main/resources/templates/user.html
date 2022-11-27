@@ -1,20 +1,31 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="UTF-8">
-    <title>User по ID</title>
+    <title>Spring Security Example</title>
 </head>
 <body>
-<h1>Данные пользователя:</h1>
-<p th:text="|Имя:  ${person.getFirstName()}|">firstName</p>
-<p th:text="|Фамилия:  ${person.getLastName()}|">lastname</p>
-<p th:text="|Возраст:  ${person.getAge()}|">age</p>
-<p th:text="|Адрес электронной почты:  ${person.getEmail()}|">email</p>
-<p th:text="|Роль:  ${person.getRole()}|">role</p>
-<br/>
+<label for="username">
+    Name:
+    <a th:text="${user.name}" id="username"></a>
+    <p></p>
+</label>
+<label for="city">
+    Surname:
+    <a th:text="${user.surname}" id="city"></a>
+    <p></p>
+</label>
+<label for="phone">
+    Username:
+    <a th:text="${user.username}" id="phone"></a>
+    <p></p>
+</label>
+<label for="email">
+    Email:
+    <a th:text="${user.email}" id="email"></a>
+    <p></p>
+</label>
 <form th:action="@{/logout}" th:method="POST">
-    <input type="submit" value="Выход">
+    <input type="submit" value="Logout">
 </form>
 </body>
 </html>
