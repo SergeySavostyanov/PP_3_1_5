@@ -20,7 +20,6 @@ public class AdminController {
     UserService userService;
     RoleService roleService;
     PasswordEncoder passwordEncoder;
-
     public AdminController(UserService userService, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.roleService = roleService;
@@ -32,7 +31,7 @@ public class AdminController {
         List<User> allUsers = userService.listUsers();
         List<Role> allRoles = roleService.listRoles();
         model.addAttribute("allUsers", allUsers);
-        model.addAttribute("allRole", allRoles);
+        model.addAttribute("allRoles", allRoles);
         model.addAttribute("user", user);
         model.addAttribute("new_user", new_user);
         return "admin/index";
