@@ -6,18 +6,18 @@
     <title>User info</title>
 </head>
 <body>
-<h2>User info</h2>
+<h2>Информация о пользователе</h2>
 <br>
 <form th:action="@{/admin/saveUser}" th:object="${user}" method="post">
-    <br>
-    <label th:for="username">Логин</label>
-    <input type="text" name="username" th:id="name" th:value="${user.getUsername()}">
     <br>
     <label th:for="name">Имя</label>
     <input type="text" name="name" th:id="name" th:value="${user.getName()}">
     <br>
     <label th:for="surname">Фамилия</label>
     <input type="text" name="surname" th:id="surname" th:value="${user.getSurname()}">
+    <br>
+    <label th:for="age">Возраст</label>
+    <input type="text" name="age" th:id="age" th:value="${user.getAge()}">
     <br>
     <label th:for="email">Email</label>
     <input type="text" name="email" th:id="email" th:value="${user.getEmail()}">

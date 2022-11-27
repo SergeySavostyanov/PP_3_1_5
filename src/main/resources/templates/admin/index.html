@@ -10,9 +10,9 @@
 <table border="1">
     <tr>
         <th>ID</th>
-        <th>Логин</th>
         <th>Имя</th>
         <th>Фамилия</th>
+        <th>Возраст</th>
         <th>Почта</th>
         <th>Изменить</th>
         <th>Удалить</th>
@@ -20,9 +20,9 @@
     <tbody>
     <tr th:each="usr : ${allUsers}">
         <td th:text="${usr.id}"></td>
-        <td th:text="${usr.username}"></td>
         <td th:text="${usr.name}"></td>
         <td th:text="${usr.surname}"></td>
+        <td th:text="${usr.age}"></td>
         <td th:text="${usr.email}"></td>
         <td style="display:flow">
             <form th:method="GET" th:action="@{/admin/updateInfo/{id}(id=${usr.getId()})}">
