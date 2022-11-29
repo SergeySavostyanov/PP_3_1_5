@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    @Transactional
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findUserByEmail(email);
@@ -30,7 +29,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return user.get();
     }
 
-    @Transactional
     @Override
     public List<User> listUsers() {
         return userRepository.findAll();
@@ -42,7 +40,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.saveAndFlush(user);
     }
 
-    @Transactional
     @Override
     public User getUserByID(long id) {
         return userRepository.findById(id).orElse(null);
