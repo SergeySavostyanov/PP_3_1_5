@@ -21,12 +21,13 @@ public class User implements UserDetails {
     private Long id;
 
 
+    @Column(name = "name")
+    private String firstName;
+
+    @Column(name = "surname")
+    private String lastName;
     @Column
-    private String name;
-    @Column
-    private String surname;
-    @Column
-    private String age;
+    private int age;
     @Column
     private String email;
     @Column
@@ -88,8 +89,8 @@ public class User implements UserDetails {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
+                ", name='" + firstName + '\'' +
+                ", surname='" + lastName + '\'' +
                 ", age='" + age + '\'' +
                 ", email='" + email + '\'' +
                 ", roles=" + roles +

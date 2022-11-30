@@ -26,19 +26,19 @@ public class ApplicationRunnerImp implements ApplicationRunner {
     }
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        List<User> users = userService.listUsers();
+        List<User> users = userService.findAllUsers();
 
         if (users.isEmpty()) {
             roleService.add(new Role("ROLE_ADMIN"));
             roleService.add(new Role("ROLE_USER"));
-            Role admin = roleService.getRoleById(1L);
-            Role user = roleService.getRoleById(2L);
+            Role admin = roleService.getRoleByName("ROLE_ADMIN");
+            Role user = roleService.getRoleByName("ROLE_USER");
             Set<Role> adminRole = new HashSet<>();
             Set<Role> userRole = new HashSet<>();
             adminRole.add(admin);
             userRole.add(user);
-            userService.add(new User( "admin@mail.ru", passwordEncoder.encode("admin"), adminRole ));
-            userService.add(new User( "user@mail.ru", passwordEncoder.encode("user"), userRole ));
+            userService.add(new User( "admin@mail.ru", "admin", adminRole ));
+            userService.add(new User( "user@mail.ru", "user", userRole ));
         }
     }
 }
