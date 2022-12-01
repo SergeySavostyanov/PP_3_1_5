@@ -17,7 +17,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
     private UserServiceImpl userService;
 
-    @Autowired
+    @Autowired   //setter
     public void setUserService(UserServiceImpl userService) {
         this.userService = userService;
     }
