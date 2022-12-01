@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     }
 
     public User findByEmail(String email) {
-        return userRepository.findUserByEmail(email);
+        return userRepository.findUserByEmail(email).orElse(null);
     }
 
     @Override
@@ -52,15 +52,12 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         userRepository.save(user);
     }
 
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> userOptional = Optional.ofNullable(findByEmail(email));
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-
-            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
-        } else throw new UsernameNotFoundException("User with username: " + email + "not found!");
+        Optional<User> user = userRepository.findUserByEmail(email);
+        if (user.isEmpty())
+            throw new UsernameNotFoundException("User not found");
+        return user.get();
     }
 
 

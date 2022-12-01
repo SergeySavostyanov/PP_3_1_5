@@ -1,10 +1,8 @@
 package ru.kata.spring.boot_security.demo.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
@@ -16,30 +14,9 @@ import java.util.List;
 public class RestApiController {
     private final UserService userService;
 
-    @Autowired
     public RestApiController(UserService userService) {
         this.userService = userService;
     }
-
-    @GetMapping("/")
-    public String MainPage() {
-        return "redirect:/login";
-    }
-
-    @GetMapping("/admin")
-    public ModelAndView adminPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("all_users");
-        return modelAndView;
-    }
-
-    @GetMapping("/user")
-    public ModelAndView userPage() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("user_only_info");
-        return modelAndView;
-    }
-
     //Возвращаем список пользователей для заполнения форм страницы allusers
     @GetMapping("/api/admin")
     public ResponseEntity<List<User>> getUserForAdminPage() {
@@ -61,8 +38,8 @@ public class RestApiController {
 
     //Получаем пользователя по id
     @GetMapping("/api/admin/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userService.findById(id);
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/api/admin")
