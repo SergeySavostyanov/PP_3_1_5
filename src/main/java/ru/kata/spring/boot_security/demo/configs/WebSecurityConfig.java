@@ -9,9 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ru.kata.spring.boot_security.demo.repository.RoleRepository;
-import ru.kata.spring.boot_security.demo.repository.UserRepository;
-import ru.kata.spring.boot_security.demo.services.RoleService;
 import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 
 @Configuration
@@ -20,21 +17,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
     private UserServiceImpl userService;
 
-    private UserRepository userRepo;
-    private RoleRepository roleRepo;
-
-    private RoleService roleService;
-
     @Autowired
     public void setUserService(UserServiceImpl userService) {
         this.userService = userService;
     }
 
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserRepository userRepository, RoleService roleService, RoleRepository roleRepository) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler) {
         this.successUserHandler = successUserHandler;
-        this.userRepo = userRepository;
-        this.roleService = roleService;
-        this.roleRepo = roleRepository;
     }
 
     @Override
