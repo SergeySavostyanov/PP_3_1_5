@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.configs;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -17,13 +18,20 @@ import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
-    private final UserServiceImpl userService;
-    private final UserRepository userRepo;
-    private final RoleRepository roleRepo;
-    private final RoleService roleService;
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserServiceImpl userService, UserRepository userRepository, RoleService roleService, RoleRepository roleRepository) {
-        this.successUserHandler = successUserHandler;
+    private UserServiceImpl userService;
+
+    private UserRepository userRepo;
+    private RoleRepository roleRepo;
+
+    private RoleService roleService;
+
+    @Autowired
+    public void setUserService(UserServiceImpl userService) {
         this.userService = userService;
+    }
+
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserRepository userRepository, RoleService roleService, RoleRepository roleRepository) {
+        this.successUserHandler = successUserHandler;
         this.userRepo = userRepository;
         this.roleService = roleService;
         this.roleRepo = roleRepository;
