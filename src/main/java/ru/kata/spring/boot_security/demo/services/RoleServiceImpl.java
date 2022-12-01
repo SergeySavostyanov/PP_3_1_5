@@ -11,9 +11,9 @@ import java.util.Set;
 @Service
 public class RoleServiceImpl implements RoleService {
 
-    private final RoleRepository roleRepository;
-    public RoleServiceImpl(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
+    private RoleRepository roleRepository;
+    public RoleServiceImpl(RoleRepository roleRepo) {
+        this.roleRepository = roleRepo;
     }
 
     @Override
