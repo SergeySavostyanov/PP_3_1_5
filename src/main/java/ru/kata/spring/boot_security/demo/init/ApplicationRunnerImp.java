@@ -14,15 +14,15 @@ import java.util.Set;
 
 @Component
 public class ApplicationRunnerImp implements ApplicationRunner {
-    private UserService userService;
-    private RoleService roleService;
+    private final UserService userService;
+    private final RoleService roleService;
 
     public ApplicationRunnerImp(UserService userService, RoleService roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         List<User> users = userService.findAllUsers();
 
         if (users.isEmpty()) {

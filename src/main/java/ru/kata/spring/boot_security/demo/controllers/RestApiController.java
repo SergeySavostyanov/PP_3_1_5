@@ -6,14 +6,12 @@ import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.services.UserService;
-
 import java.security.Principal;
 import java.util.List;
 
 @RestController
 public class RestApiController {
     private final UserService userService;
-
     public RestApiController(UserService userService) {
         this.userService = userService;
     }

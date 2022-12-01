@@ -17,10 +17,10 @@ import ru.kata.spring.boot_security.demo.services.UserServiceImpl;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
-    private UserServiceImpl userService;
-    private UserRepository userRepo;
-    private RoleRepository roleRepo;
-    private RoleService roleService;
+    private final UserServiceImpl userService;
+    private final UserRepository userRepo;
+    private final RoleRepository roleRepo;
+    private final RoleService roleService;
     public WebSecurityConfig(SuccessUserHandler successUserHandler, UserServiceImpl userService, UserRepository userRepository, RoleService roleService, RoleRepository roleRepository) {
         this.successUserHandler = successUserHandler;
         this.userService = userService;
