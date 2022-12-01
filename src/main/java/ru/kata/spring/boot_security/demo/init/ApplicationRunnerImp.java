@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.init;
 
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
@@ -16,12 +15,10 @@ import java.util.Set;
 @Component
 public class ApplicationRunnerImp implements ApplicationRunner {
     private UserService userService;
-    private PasswordEncoder passwordEncoder;
     private RoleService roleService;
 
-    public ApplicationRunnerImp(UserService userService, PasswordEncoder passwordEncoder, RoleService roleService) {
+    public ApplicationRunnerImp(UserService userService, RoleService roleService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
         this.roleService = roleService;
     }
     @Override
